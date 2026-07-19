@@ -920,6 +920,184 @@ body{font-size:16px;line-height:1.8}
  .reference-panel-grid article p{font-size:12px}
 }
 
+
+
+/* ===== Growth Explorer 4.0: unified report system and hierarchy ===== */
+.report{
+ --r-font-display:35px;
+ --r-font-section:24px;
+ --r-font-card:18px;
+ --r-font-body:16px;
+ --r-font-small:13px;
+ --r-font-micro:11px;
+ --r-radius-card:16px;
+ --r-radius-pill:999px;
+ --r-bg:#ffffff;
+ --r-soft:#f6f8fa;
+ --r-soft-green:#f1f8f4;
+ --r-soft-teal:#eef8f7;
+ --r-soft-amber:#fff7e8;
+ --r-soft-red:#fff3f2;
+ --r-state-green:#2f8f68;
+ --r-state-teal:#277f78;
+ --r-state-amber:#a96d18;
+ --r-state-red:#ad4846;
+ --r-state-gray:#718095;
+ background:var(--r-bg);
+ border-radius:var(--r-radius-card);
+ padding:38px;
+ font-size:var(--r-font-body);
+ line-height:1.8;
+}
+.report :where(.decision-summary,.direction-card,.clarity-card,.growth-position-card,.ansoff-matrix-wrap,.matrix-cell,.readiness-overview,.readiness-card,.path-node,.insight-box,.result-change-card,.analysis-basis,.execution-card,.execution-why,.execution-fact,.methodology-result p,.reflection-card,.report-fold,.report-fold-body){border-radius:var(--r-radius-card)}
+.report :where(.status,.readiness-level,.readiness-overview-badges em,.matrix-cell.active::after,.execution-rank,.horizon-pill,.position-track,.version-badge){border-radius:var(--r-radius-pill)}
+.report :where(.report-title,.decision-main h2){font-size:var(--r-font-display)!important}
+.report :where(.section-head h2,.report-fold>summary>span){font-size:var(--r-font-section)!important}
+.report :where(.direction-title,.growth-position-heading strong,.readiness-name,.key-insight,.clarity-value,.insight-title,.matrix-cell strong,.execution-simple,.result-change-card){font-size:var(--r-font-card)!important}
+.report :where(.decision-main p,.section-help,.direction-desc,.position-summary,.change-summary,.readiness-detail,.clean-list li,.methodology-result p,.reflection-card strong,.execution-why,.execution-fact strong){font-size:var(--r-font-body)!important}
+.report :where(.report-sub,.report-meta,.decision-facts strong,.decision-actions ol,.growth-position-heading p,.position-label strong,.readiness-overview span,.execution-name,.matrix-title){font-size:var(--r-font-small)!important}
+.report :where(.decision-eyebrow,.decision-facts span,.decision-actions>span,.card-label,.position-marker,.position-label small,.matrix-cell span,.readiness-overview-badges em,.readiness-level,.path-num,.path-name,.path-horizon,.execution-rank,.execution-fact span,.report-fold>summary>small,.report-foot){font-size:var(--r-font-micro)!important}
+
+.report-header{padding-bottom:22px;gap:16px}
+.report-title{line-height:1.25;margin:0 0 3px}
+.report-sub{line-height:1.65}
+.report-meta{line-height:1.65}
+
+/* Layer 1: decision */
+.decision-summary{margin:24px 0 28px;padding:25px;gap:18px;background:linear-gradient(135deg,#fffdf7 0%,#fff 66%,var(--r-soft-teal) 100%);box-shadow:0 12px 30px rgba(15,34,55,.075)}
+.decision-main h2{line-height:1.3}
+.decision-main p{line-height:1.8}
+.decision-facts{gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r-radius-card);padding:4px 15px}
+.decision-facts>div{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:12px 0;background:transparent}
+.decision-facts>div:last-child{border-bottom:0}
+.decision-facts strong{line-height:1.65}
+.decision-actions{border:0;border-top:1px solid var(--line);border-radius:0;padding:15px 0 0;background:transparent}
+.decision-actions ol{line-height:1.75;gap:9px}
+.action-number{border-radius:var(--r-radius-pill);background:var(--r-soft-green);color:var(--r-state-green)}
+
+/* Layer 2: visual support */
+.report>.section{margin-top:30px;padding-top:0}
+.report .section-head{margin-bottom:10px;gap:12px}
+.report .section-head h2{line-height:1.45;white-space:normal}
+.report .section-head h2::before{width:6px;height:24px;border-radius:var(--r-radius-pill)}
+.report .section-help{line-height:1.8;margin-bottom:14px;color:var(--muted)}
+.result-hero{gap:12px;margin-top:15px}
+.direction-card,.clarity-card{padding:20px;background:#fff;box-shadow:none}
+.direction-card{background:linear-gradient(135deg,#fffaf0,var(--r-soft-teal));border-color:var(--gold-line)}
+.growth-position-card,.ansoff-matrix-wrap{padding:18px;background:#fff;box-shadow:none}
+.position-label{background:var(--r-soft);border-radius:var(--r-radius-card)}
+.position-summary{background:var(--r-soft-green);border-right-color:var(--r-state-green)}
+.ansoff-matrix{gap:9px}
+.matrix-cell{background:var(--r-soft);min-height:82px;padding:14px}
+.matrix-cell.active{background:var(--r-soft-green);border-color:var(--r-state-green)}
+.matrix-cell.active::after{background:var(--r-state-green)}
+
+.growth-map{gap:8px}
+.path-node{min-height:112px;padding:13px 10px;background:#fff;box-shadow:none}
+.path-node.primary{background:var(--r-soft-amber);border-color:var(--gold)}
+.path-node.secondary{background:var(--r-soft-teal);border-color:var(--r-state-teal)}
+
+.readiness-overview{padding:14px 16px;background:var(--r-soft);border-color:var(--line)}
+.readiness-grid{gap:10px}
+.readiness-card{padding:15px;border-top-width:3px;box-shadow:none;background:#fff}
+.readiness-card::after{display:none}
+.readiness-icon{border-radius:var(--r-radius-pill)}
+.readiness-meter span{border-radius:var(--r-radius-pill)}
+
+/* One statistical-box pattern */
+.decision-facts>div,.execution-fact{position:relative}
+.decision-facts span,.execution-fact span{display:block;color:var(--muted);font-weight:800;margin-bottom:4px}
+.decision-facts strong,.execution-fact strong{display:block;color:var(--navy);font-weight:900}
+.execution-facts{gap:8px}
+.execution-fact{background:var(--r-soft);border:0;padding:12px}
+
+/* Decision warnings remain visible but quieter */
+.two-col{gap:12px}
+.insight-box{padding:17px;background:#fff;box-shadow:none}
+.insight-box.warn{background:var(--r-soft-amber);border-color:#ead8b8}
+.insight-box.danger{background:var(--r-soft-red);border-color:#edcfcd}
+.insight-title{font-weight:900}
+.clean-list{gap:8px}
+.clean-list li{line-height:1.75}
+.result-change-card{padding:18px;background:var(--r-soft-teal);border-color:#cce5e1;line-height:1.85}
+
+/* Layer 3: progressive disclosure */
+.report-fold{margin-top:24px;border:1px solid var(--line);background:#fff;overflow:hidden;box-shadow:none}
+.report-fold>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;cursor:pointer;background:var(--r-soft);color:var(--navy);font-weight:900;line-height:1.45}
+.report-fold>summary::-webkit-details-marker{display:none}
+.report-fold>summary::after{content:'+';width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:var(--r-radius-pill);background:#fff;border:1px solid var(--line);color:var(--r-state-teal);font-size:20px;line-height:1}
+.report-fold[open]>summary::after{content:'−'}
+.report-fold>summary>span{display:block;min-width:0}
+.report-fold>summary>small{display:block;margin-inline-start:auto;color:var(--muted);font-weight:700;text-align:left}
+.report-fold-body{padding:18px 20px;background:#fff;border-top:1px solid var(--line)}
+.report-fold-compact{margin-top:16px}
+.report-fold-compact .analysis-basis{margin:0;padding:0;border:0;background:transparent}
+.report-fold-compact .basis-grid{margin-top:0}
+.report-fold-section .section-help{margin-top:0}
+.methodology-result p{padding:0;border:0;background:transparent;margin:0;line-height:1.9}
+.reflection-card{margin:0;padding:16px;background:var(--r-soft);border:0;box-shadow:none}
+.reflection-card strong{line-height:1.85}
+
+/* Export always contains the complete report. */
+.report.exporting details.report-fold{display:block!important;overflow:visible!important;break-inside:auto}
+.report.exporting details.report-fold>summary{break-after:avoid}
+.report.exporting details.report-fold>.report-fold-body{display:block!important}
+.report.exporting .report-fold>summary::after{content:'−'}
+.report.exporting :where(.decision-summary,.growth-position-card,.ansoff-matrix-wrap,.readiness-card,.path-node,.insight-box,.result-change-card,.execution-card,.report-fold>summary){break-inside:avoid}
+
+@media(max-width:760px){
+ .report{padding:20px;font-size:var(--r-font-body)}
+ .report :where(.report-title,.decision-main h2){font-size:29px!important}
+ .report :where(.section-head h2,.report-fold>summary>span){font-size:21px!important}
+ .report :where(.direction-title,.growth-position-heading strong,.readiness-name,.key-insight,.clarity-value,.insight-title,.matrix-cell strong,.execution-simple,.result-change-card){font-size:17px!important}
+ .decision-summary{padding:17px}
+ .report-fold>summary{align-items:flex-start;flex-wrap:wrap;padding:16px}
+ .report-fold>summary>small{width:calc(100% - 44px);margin:0}
+ .report-fold-body{padding:16px}
+}
+
+
+/* 4.0 strict token pass: six type sizes, two rounded shapes, five state families */
+.report *{font-size:var(--r-font-body)!important;border-radius:0!important}
+.report :where(.report-title,.decision-main h2){font-size:var(--r-font-display)!important}
+.report :where(.section-head h2,.report-fold>summary>span,.reflection-icon){font-size:var(--r-font-section)!important}
+.report :where(.direction-title,.growth-position-heading strong,.readiness-name,.key-insight,.clarity-value,.insight-title,.matrix-cell strong,.execution-simple,.result-change-card,.change-level strong,.change-level-number){font-size:var(--r-font-card)!important}
+.report :where(.decision-main p,.section-help,.direction-desc,.position-summary,.change-summary,.change-level span,.readiness-detail,.clean-list li,.methodology-result p,.reflection-card strong,.execution-why,.execution-fact strong){font-size:var(--r-font-body)!important}
+.report :where(.report-sub,.report-meta,.report-brand-copy strong,.decision-facts strong,.decision-actions ol,.decision-actions li,.action-text,.growth-position-heading p,.position-label strong,.readiness-overview strong,.readiness-overview span,.execution-name,.matrix-title,.basis-item strong){font-size:var(--r-font-small)!important}
+.report :where(.report-brand-copy span,.decision-eyebrow,.decision-facts span,.decision-actions>span,.action-number,.card-label,.position-marker,.position-label small,.matrix-cell span,.readiness-overview-badges em,.readiness-level,.path-num,.path-name,.path-horizon,.execution-rank,.execution-fact span,.report-fold>summary>small,.report-foot,.basis-item span,.status,.info-dot){font-size:var(--r-font-micro)!important}
+
+.report :where(.decision-summary,.decision-facts,.direction-card,.clarity-card,.growth-position-card,.position-label,.position-summary,.ansoff-matrix-wrap,.matrix-cell,.key-insight,.change-level,.change-summary,.path-node,.readiness-overview,.readiness-card,.insight-box,.result-change-card,.report-fold,.report-fold-body,.analysis-basis,.execution-card,.execution-why,.execution-fact,.methodology-result p,.reflection-card,.basis-item){border-radius:var(--r-radius-card)!important}
+.report :where(.report-product-mark,.growth-position-icon,.position-marker,.matrix-cell.active::after,.action-number,.change-level-number,.readiness-icon,.readiness-level,.readiness-meter span,.readiness-overview-badges em,.status,.execution-rank,.info-dot,.report-fold>summary::after,.position-track,.horizon-pill){border-radius:var(--r-radius-pill)!important}
+
+/* Stable background palette */
+.report *{background-color:transparent!important}
+.report :where(.decision-facts,.clarity-card,.growth-position-card,.ansoff-matrix-wrap,.readiness-card,.path-node,.report-fold,.report-fold-body,.analysis-basis,.execution-card,.execution-why,.methodology-result p){background-color:#fff!important}
+.report :where(.position-label,.matrix-cell,.readiness-overview,.report-fold>summary,.execution-fact,.execution-rank,.change-level,.change-summary){background-color:var(--r-soft)!important}
+.report :where(.action-number,.position-summary,.matrix-cell.active,.key-insight,.change-level.primary,.execution-card.rank-1){background-color:var(--r-soft-green)!important}
+.report :where(.info-dot,.result-change-card){background-color:var(--r-soft-teal)!important}
+.report :where(.insight-box.warn){background-color:var(--r-soft-amber)!important}
+.report :where(.insight-box.danger){background-color:var(--r-soft-red)!important}
+.report .readiness-card.ready :where(.readiness-icon,.readiness-level),.report .readiness-card.complete :where(.readiness-icon,.readiness-level){background-color:var(--r-soft-green)!important}
+.report .readiness-card.strengthen :where(.readiness-icon,.readiness-level){background-color:var(--r-soft-amber)!important}
+.report .readiness-card.gap :where(.readiness-icon,.readiness-level){background-color:var(--r-soft-red)!important}
+.report .readiness-card.unknown :where(.readiness-icon,.readiness-level){background-color:var(--r-soft)!important}
+.report .readiness-meter span{background-color:#e8edf2!important}
+.report .readiness-card.ready .readiness-meter span.active,.report .readiness-card.complete .readiness-meter span.active{background-color:var(--r-state-green)!important}
+.report .readiness-card.strengthen .readiness-meter span.active{background-color:var(--r-state-amber)!important}
+.report .readiness-card.gap .readiness-meter span.active{background-color:var(--r-state-red)!important}
+.report .section-line{background-color:var(--line)!important}
+.report .position-marker.primary,.report .matrix-cell.active::after,.report .execution-card.rank-1 .execution-rank{background-color:var(--r-state-green)!important}
+.report .position-marker.secondary{background-color:var(--r-state-teal)!important}
+
+@media(max-width:760px){
+ .report *{font-size:var(--r-font-body)!important}
+ .report :where(.report-title,.decision-main h2){font-size:29px!important}
+ .report :where(.section-head h2,.report-fold>summary>span,.reflection-icon){font-size:21px!important}
+ .report :where(.direction-title,.growth-position-heading strong,.readiness-name,.key-insight,.clarity-value,.insight-title,.matrix-cell strong,.execution-simple,.result-change-card,.change-level strong,.change-level-number){font-size:17px!important}
+ .report :where(.report-sub,.report-meta,.report-brand-copy strong,.decision-facts strong,.decision-actions ol,.decision-actions li,.action-text,.growth-position-heading p,.position-label strong,.readiness-overview strong,.readiness-overview span,.execution-name,.matrix-title,.basis-item strong){font-size:13px!important}
+ .report :where(.report-brand-copy span,.decision-eyebrow,.decision-facts span,.decision-actions>span,.action-number,.card-label,.position-marker,.position-label small,.matrix-cell span,.readiness-overview-badges em,.readiness-level,.path-num,.path-name,.path-horizon,.execution-rank,.execution-fact span,.report-fold>summary>small,.report-foot,.basis-item span,.status,.info-dot){font-size:11px!important}
+}
+
 </style>
 </head>
 <body>
@@ -941,7 +1119,7 @@ body{font-size:16px;line-height:1.8}
  </div>
  </div>
  <div class="header-actions">
- <span class="version-badge">الإصدار 3.9</span>
+ <span class="version-badge">الإصدار 4.0</span>
  </div>
  </div>
 </header>
@@ -1031,7 +1209,7 @@ body{font-size:16px;line-height:1.8}
  <div class="wrap">
  <div class="result-actions">
  <button class="action-btn" type="button" onclick="App.exportImage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg> تصدير صورة</button>
- <button class="action-btn" type="button" onclick="App.exportPDF()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg> تصدير PDF</button>
+ <button class="action-btn" type="button" onclick="App.exportPDF()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></svg> تصدير PDF كامل</button>
  </div>
 
  <article class="report" id="report">
@@ -1097,10 +1275,14 @@ body{font-size:16px;line-height:1.8}
    </div>
    <div class="growth-spectrum" id="growthSpectrum"></div>
   </div>
-  <section class="analysis-basis compact-basis">
-   <div class="basis-head"><strong>لماذا ظهر هذا المسار؟</strong><span>السوق والقيمة والنتيجة — مصفوفة أنسوف</span></div>
-   <div class="basis-grid" id="analysisBasis"></div>
-  </section>
+  <details class="report-fold report-fold-compact">
+   <summary><span>لماذا ظهر هذا المسار؟</span><small>السوق والقيمة والنتيجة</small></summary>
+   <div class="report-fold-body">
+    <section class="analysis-basis compact-basis">
+     <div class="basis-grid" id="analysisBasis"></div>
+    </section>
+   </div>
+  </details>
   <div class="ansoff-matrix-wrap">
    <div class="matrix-title">موقع توجهك الحالي في مصفوفة السوق والقيمة</div>
    <div class="ansoff-matrix" id="ansoffMatrix"></div>
@@ -1125,11 +1307,13 @@ body{font-size:16px;line-height:1.8}
   <div class="readiness-grid" id="readinessGrid"></div>
  </section>
 
- <section class="section">
-  <div class="section-head"><h2>ما الطريقة الأقرب للتنفيذ؟</h2><div class="section-line"></div></div>
-  <p class="section-help">رتبت الأداة طرق التنفيذ بحسب إجاباتك. يبدأ كل خيار بشرح مبسط لمعناه، ثم يوضح سبب ظهوره وما يحتاجه قبل البدء.</p>
-  <div class="execution-grid execution-ranked" id="executionGrid"></div>
- </section>
+ <details class="report-fold report-fold-section">
+  <summary><span>ما الطريقة الأقرب للتنفيذ؟</span><small>تفاصيل طرق التنفيذ مرتبة حسب النتيجة</small></summary>
+  <div class="report-fold-body">
+   <p class="section-help">رتبت الأداة طرق التنفيذ بحسب إجاباتك. يبدأ كل خيار بشرح مبسط لمعناه، ثم يوضح سبب ظهوره وما يحتاجه قبل البدء.</p>
+   <div class="execution-grid execution-ranked" id="executionGrid"></div>
+  </div>
+ </details>
 
  <section class="section two-col">
   <div class="insight-box danger">
@@ -1147,18 +1331,25 @@ body{font-size:16px;line-height:1.8}
   <div class="result-change-card" id="resultChange"></div>
  </section>
 
- <section class="section methodology-result">
-  <div class="section-head"><h2>كيف تم الوصول إلى النتيجة؟</h2><div class="section-line"></div></div>
-  <p>حددت مصفوفة أنسوف اتجاه السوق والقيمة، وساعدت الآفاق الثلاثة من ماكنزي على فهم حجم التغيير، ثم فحصت الأداة جاهزية التنفيذ وقارنت طرق البدء المناسبة لإجاباتك.</p>
- </section>
+ <details class="report-fold report-fold-section methodology-result">
+  <summary><span>كيف تم الوصول إلى النتيجة؟</span><small>المنهجية المستخدمة في بناء القراءة</small></summary>
+  <div class="report-fold-body">
+   <p>حددت مصفوفة أنسوف اتجاه السوق والقيمة، وساعدت الآفاق الثلاثة من ماكنزي على فهم حجم التغيير، ثم فحصت الأداة جاهزية التنفيذ وقارنت طرق البدء المناسبة لإجاباتك.</p>
+  </div>
+ </details>
 
- <section class="reflection-card">
-  <div class="reflection-icon">؟</div>
-  <div><span>سؤال يستحق التفكير</span><strong id="reflectionQuestion"></strong></div>
- </section>
+ <details class="report-fold report-fold-section reflection-fold">
+  <summary><span>سؤال يستحق التفكير</span><small>سؤال يساعدك على اختبار منطق القرار</small></summary>
+  <div class="report-fold-body">
+   <section class="reflection-card">
+    <div class="reflection-icon">؟</div>
+    <div><strong id="reflectionQuestion"></strong></div>
+   </section>
+  </div>
+ </details>
 
  <div class="report-foot">
-  <span>نسخة النموذج 3.9</span>
+  <span>نسخة النموذج 4.0</span>
   <span dir="ltr">https://almohammdin.github.io/GrowthCompass/</span>
  </div>
 </article>
@@ -1575,29 +1766,78 @@ const App={
  },
  async captureReport(){
   const report=document.getElementById('report');
-  document.body.classList.add('busy');report.classList.add('exporting');
+  const folds=[...report.querySelectorAll('details.report-fold')];
+  const foldState=folds.map(x=>x.open);
+  document.body.classList.add('busy');report.classList.add('exporting');folds.forEach(x=>x.open=true);
   try{
    await this.waitForReportAssets(report);
    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-   return await this.captureReportNative(report);
-  }finally{report.classList.remove('exporting');document.body.classList.remove('busy');}
+   const reportRect=report.getBoundingClientRect();
+   const safeNodes=[...report.querySelectorAll('.report-header,.decision-summary,.section,.report-fold,.growth-position-card,.ansoff-matrix-wrap,.growth-map,.readiness-card,.execution-card,.insight-box,.result-change-card,.methodology-result p,.reflection-card,.report-foot')];
+   const safeBreaks=[0,...safeNodes.flatMap(node=>{const rect=node.getBoundingClientRect();return[Math.max(0,rect.top-reportRect.top),Math.max(0,rect.bottom-reportRect.top)]}),report.scrollHeight]
+    .filter((value,index,array)=>index===0||Math.abs(value-array[index-1])>4)
+    .sort((a,b)=>a-b);
+   const canvas=await this.captureReportNative(report);
+   const scale=canvas.width/Math.max(1,report.scrollWidth);
+   canvas._safePageBreaks=safeBreaks.map(x=>Math.round(x*scale));
+   return canvas;
+  }finally{
+   folds.forEach((x,i)=>x.open=foldState[i]);
+   report.classList.remove('exporting');document.body.classList.remove('busy');
+  }
  },
  canvasBlob(canvas,type='image/png',quality=.95){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('تعذر إنشاء الملف')),type,quality));},
  fileName(ext){const company=(this.company||'').replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').trim();const base=company?`تقرير مستكشف مسارات النمو - ${company}`:'تقرير مستكشف مسارات النمو';return`${base}.${ext}`;},
  concatBytes(parts){const size=parts.reduce((sum,part)=>sum+part.length,0),out=new Uint8Array(size);let offset=0;for(const part of parts){out.set(part,offset);offset+=part.length;}return out;},
  pdfBlobFromCanvas(canvas){
-  const jpegUrl=canvas.toDataURL('image/jpeg',.94),base64=jpegUrl.slice(jpegUrl.indexOf(',')+1),binary=atob(base64),jpeg=new Uint8Array(binary.length);
-  for(let i=0;i<binary.length;i++)jpeg[i]=binary.charCodeAt(i);
   const encoder=new TextEncoder(),chunks=[];let length=0;const offsets=[];
-  const addBytes=bytes=>{chunks.push(bytes);length+=bytes.length;};const add=text=>addBytes(encoder.encode(text));const begin=n=>{offsets[n]=length;add(`${n} 0 obj\n`);};
-  const pageW=595.28,pageH=pageW*(canvas.height/canvas.width),content=`q\n${pageW.toFixed(2)} 0 0 ${pageH.toFixed(2)} 0 0 cm\n/Im0 Do\nQ\n`;
+  const addBytes=bytes=>{chunks.push(bytes);length+=bytes.length;};
+  const add=text=>addBytes(encoder.encode(text));
+  const begin=n=>{offsets[n]=length;add(`${n} 0 obj\n`);};
+  const pageW=595.28,pageH=841.89;
+  const nominalSlice=Math.max(1,Math.floor(canvas.width*(pageH/pageW)));
+  const safe=[...(canvas._safePageBreaks||[])].filter(x=>x>0&&x<canvas.height).sort((a,b)=>a-b);
+  const slices=[];let top=0;
+  while(top<canvas.height){
+   const ideal=Math.min(canvas.height,top+nominalSlice);
+   let bottom=ideal;
+   if(ideal<canvas.height){
+    const min=top+nominalSlice*.64;
+    const candidates=safe.filter(x=>x>=min&&x<=ideal-18);
+    if(candidates.length)bottom=candidates[candidates.length-1];
+   }
+   if(bottom<=top+100)bottom=ideal;
+   slices.push([top,bottom]);top=bottom;
+  }
+  const pages=slices.map(([y1,y2])=>{
+   const pageCanvas=document.createElement('canvas');pageCanvas.width=canvas.width;pageCanvas.height=nominalSlice;
+   const ctx=pageCanvas.getContext('2d',{alpha:false});ctx.fillStyle='#fff';ctx.fillRect(0,0,pageCanvas.width,pageCanvas.height);
+   ctx.drawImage(canvas,0,y1,canvas.width,y2-y1,0,0,canvas.width,y2-y1);
+   const base64=pageCanvas.toDataURL('image/jpeg',.93).split(',')[1],binary=atob(base64),jpeg=new Uint8Array(binary.length);
+   for(let i=0;i<binary.length;i++)jpeg[i]=binary.charCodeAt(i);
+   return{jpeg,width:pageCanvas.width,height:pageCanvas.height};
+  });
+  const count=pages.length,pageObjStart=3,imageObjStart=pageObjStart+count,contentObjStart=imageObjStart+count;
   add('%PDF-1.4\n%GrowthExplorer\n');
   begin(1);add('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
-  begin(2);add('<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
-  begin(3);add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW.toFixed(2)} ${pageH.toFixed(2)}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n`);
-  begin(4);add(`<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);addBytes(jpeg);add('\nendstream\nendobj\n');
-  const contentBytes=encoder.encode(content);begin(5);add(`<< /Length ${contentBytes.length} >>\nstream\n`);addBytes(contentBytes);add('endstream\nendobj\n');
-  const xref=length;add('xref\n0 6\n0000000000 65535 f \n');for(let i=1;i<=5;i++)add(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);add(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+  begin(2);add(`<< /Type /Pages /Kids [${pages.map((_,i)=>`${pageObjStart+i} 0 R`).join(' ')}] /Count ${count} >>\nendobj\n`);
+  pages.forEach((page,i)=>{
+   begin(pageObjStart+i);
+   add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW.toFixed(2)} ${pageH.toFixed(2)}] /Resources << /XObject << /Im${i} ${imageObjStart+i} 0 R >> >> /Contents ${contentObjStart+i} 0 R >>\nendobj\n`);
+  });
+  pages.forEach((page,i)=>{
+   begin(imageObjStart+i);
+   add(`<< /Type /XObject /Subtype /Image /Width ${page.width} /Height ${page.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${page.jpeg.length} >>\nstream\n`);
+   addBytes(page.jpeg);add('\nendstream\nendobj\n');
+  });
+  pages.forEach((page,i)=>{
+   const content=`q\n${pageW.toFixed(2)} 0 0 ${pageH.toFixed(2)} 0 0 cm\n/Im${i} Do\nQ\n`,bytes=encoder.encode(content);
+   begin(contentObjStart+i);add(`<< /Length ${bytes.length} >>\nstream\n`);addBytes(bytes);add('endstream\nendobj\n');
+  });
+  const objectCount=contentObjStart+count-1,xref=length;
+  add(`xref\n0 ${objectCount+1}\n0000000000 65535 f \n`);
+  for(let i=1;i<=objectCount;i++)add(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);
+  add(`trailer\n<< /Size ${objectCount+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
   return new Blob([this.concatBytes(chunks)],{type:'application/pdf'});
  },
  async exportImage(){try{const canvas=await this.captureReport();const blob=await this.canvasBlob(canvas,'image/png');this.downloadBlob(blob,this.fileName('png'));}catch(error){console.error(error);alert('تعذر إنشاء الصورة في هذه المحاولة. أعد فتح الصفحة ثم جرّب مرة أخرى.');}},
