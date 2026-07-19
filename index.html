@@ -922,7 +922,7 @@ body{font-size:16px;line-height:1.8}
 
 
 
-/* ===== Growth Explorer 4.0: unified report system and hierarchy ===== */
+/* ===== Growth Explorer 4.0.1: unified report system and hierarchy ===== */
 .report{
  --r-font-display:35px;
  --r-font-section:24px;
@@ -1035,8 +1035,9 @@ body{font-size:16px;line-height:1.8}
 .report-fold-compact .basis-grid{margin-top:0}
 .report-fold-section .section-help{margin-top:0}
 .methodology-result p{padding:0;border:0;background:transparent;margin:0;line-height:1.9}
-.reflection-card{margin:0;padding:16px;background:var(--r-soft);border:0;box-shadow:none}
-.reflection-card strong{line-height:1.85}
+.reflection-card{margin:0;padding:16px;background:var(--r-soft);border:0;box-shadow:none;color:var(--navy)}
+.reflection-icon{background:#fff;border:1px solid var(--line);color:var(--r-state-teal)}
+.reflection-card strong{line-height:1.85;color:var(--navy)}
 
 /* Export always contains the complete report. */
 .report.exporting details.report-fold{display:block!important;overflow:visible!important;break-inside:auto}
@@ -1057,7 +1058,7 @@ body{font-size:16px;line-height:1.8}
 }
 
 
-/* 4.0 strict token pass: six type sizes, two rounded shapes, five state families */
+/* 4.0.1 strict token pass: six type sizes, two rounded shapes, five state families */
 .report *{font-size:var(--r-font-body)!important;border-radius:0!important}
 .report :where(.report-title,.decision-main h2){font-size:var(--r-font-display)!important}
 .report :where(.section-head h2,.report-fold>summary>span,.reflection-icon){font-size:var(--r-font-section)!important}
@@ -1071,8 +1072,8 @@ body{font-size:16px;line-height:1.8}
 
 /* Stable background palette */
 .report *{background-color:transparent!important}
-.report :where(.decision-facts,.clarity-card,.growth-position-card,.ansoff-matrix-wrap,.readiness-card,.path-node,.report-fold,.report-fold-body,.analysis-basis,.execution-card,.execution-why,.methodology-result p){background-color:#fff!important}
-.report :where(.position-label,.matrix-cell,.readiness-overview,.report-fold>summary,.execution-fact,.execution-rank,.change-level,.change-summary){background-color:var(--r-soft)!important}
+.report :where(.decision-facts,.clarity-card,.growth-position-card,.ansoff-matrix-wrap,.readiness-card,.path-node,.report-fold,.report-fold-body,.analysis-basis,.execution-card,.execution-why,.methodology-result p,.reflection-icon){background-color:#fff!important}
+.report :where(.position-label,.matrix-cell,.readiness-overview,.report-fold>summary,.execution-fact,.execution-rank,.change-level,.change-summary,.reflection-card){background-color:var(--r-soft)!important}
 .report :where(.action-number,.position-summary,.matrix-cell.active,.key-insight,.change-level.primary,.execution-card.rank-1){background-color:var(--r-soft-green)!important}
 .report :where(.info-dot,.result-change-card){background-color:var(--r-soft-teal)!important}
 .report :where(.insight-box.warn){background-color:var(--r-soft-amber)!important}
@@ -1119,7 +1120,7 @@ body{font-size:16px;line-height:1.8}
  </div>
  </div>
  <div class="header-actions">
- <span class="version-badge">الإصدار 4.0</span>
+ <span class="version-badge">الإصدار 4.0.1</span>
  </div>
  </div>
 </header>
@@ -1349,7 +1350,7 @@ body{font-size:16px;line-height:1.8}
  </details>
 
  <div class="report-foot">
-  <span>نسخة النموذج 4.0</span>
+  <span>نسخة النموذج 4.0.1</span>
   <span dir="ltr">https://almohammdin.github.io/GrowthCompass/</span>
  </div>
 </article>
