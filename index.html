@@ -24,8 +24,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -78,6 +76,8 @@ a{color:inherit}
 .progress-top{height:3px;background:rgba(255,255,255,.05)}
 .progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .35s ease}
 .progress-inner{display:flex;align-items:center;gap:12px;padding:10px 0}
+.progress-status{margin-inline-start:auto;display:flex;align-items:baseline;gap:5px;white-space:nowrap;color:var(--muted);font-size:12px}
+.progress-status strong{font-size:16px;color:var(--gold-2);font-variant-numeric:tabular-nums}
 .restart-mini{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:6px 10px;font-size:10px;font-weight:700}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex:1}
 .step{display:flex;align-items:center;gap:7px;min-width:0;color:var(--muted);font-size:10px;font-weight:700}
@@ -154,8 +154,11 @@ a{color:inherit}
 .secondary-btn{border:1px solid var(--line);background:transparent;color:var(--text-2);font-size:12px;font-weight:700;padding:13px 18px;border-radius:11px}
 .next-btn{margin-inline-start:auto;border:none;background:linear-gradient(135deg,var(--gold),var(--gold-2));color:#07111f;font-size:13px;font-weight:800;padding:14px 24px;border-radius:11px;min-width:190px}
 .next-btn:disabled{opacity:.38;cursor:not-allowed}
-.form-warning{font-size:11px;color:var(--amber);display:none;margin-inline-start:auto}
-.form-warning.show{display:block}
+.stage-warning{display:none;flex:1;min-width:260px;padding:12px 14px;border-radius:11px;border:1px solid rgba(173,72,70,.28);background:rgba(173,72,70,.08);color:#b84f4c;font-size:13px;font-weight:700;line-height:1.6}
+.stage-warning.show{display:block}
+.question.missing{border-color:rgba(173,72,70,.72)!important;box-shadow:0 0 0 3px rgba(173,72,70,.08)}
+.question-error{display:none;margin-top:12px;padding:9px 11px;border-radius:9px;background:rgba(173,72,70,.08);color:#b84f4c;font-size:13px;font-weight:700}
+.question.missing .question-error{display:block}
 
 /* Results */
 .results{display:none;padding:28px 0 70px}
@@ -313,9 +316,9 @@ body.busy button{pointer-events:none}
  .wrap{width:calc(100% - 22px)}
  .header-inner{height:64px}.site-header{position:relative}.progress-shell{top:0}.brand-logo{width:92px;height:40px}.brand-copy{display:block}.version-badge{display:none}
  .landing{min-height:auto;padding:32px 0}.hero{gap:22px}.hero-copy{padding:10px 10px 10px 14px;padding-inline-end:10px}.hero-title{font-size:38px;letter-spacing:-1px}.hero-desc{font-size:14px}.intro-card{padding:16px}.identity-grid{grid-template-columns:1fr}
- .steps{gap:3px}.step-label{display:none}.step{justify-content:center}.progress-inner{gap:6px}.restart-mini{font-size:0;width:33px;height:29px;padding:0}.restart-mini::after{content:'↺';font-size:15px}
+ .steps{gap:3px}.step-label{display:none}.step{justify-content:center}.progress-inner{gap:6px}.restart-mini{font-size:0;width:33px;height:29px;padding:0}.restart-mini::after{content:'↺';font-size:15px}.progress-status{font-size:10px;gap:3px}.progress-status strong{font-size:13px}
  .assessment{padding-top:24px}.stage-header{grid-template-columns:auto 1fr;gap:11px}.stage-number{width:43px;height:43px}.stage-title{font-size:21px}.question{padding:14px}.choices{grid-template-columns:1fr}.choice{min-height:auto}
- .stage-nav{flex-wrap:wrap}.form-warning{order:3;width:100%;margin:0}.next-btn{min-width:0;flex:1}
+ .stage-nav{flex-wrap:wrap}.stage-warning{order:3;width:100%;margin:0}.next-btn{min-width:0;flex:1}
  .report{padding:15px;border-radius:16px}.report-header{align-items:flex-start;gap:10px}.report-logo{width:96px;height:44px}.report-title{font-size:18px}.report-meta{display:none}.direction-title{font-size:21px}
  .growth-map{grid-template-columns:repeat(2,1fr)}.readiness-grid{grid-template-columns:repeat(2,1fr)}.execution-grid,.two-col{grid-template-columns:1fr}.report-foot{flex-direction:column}
  .footer-inner{flex-direction:column}.result-actions{justify-content:stretch}.action-btn{flex:1;justify-content:center}
@@ -358,6 +361,7 @@ body{font-size:16px;line-height:1.8}
 .version-badge{font-size:12px;background:#eef7f5;color:var(--teal)}
 .progress-shell{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line)}
 .progress-top{background:#e8ecef}
+.progress-status{color:#6f7d8d}.progress-status strong{color:var(--gold-2)}
 .restart-mini{background:#fff;color:var(--muted);font-size:12px;padding:8px 13px}
 .step{font-size:13px}.step-dot{width:29px;height:29px;background:#fff}
 .step.active{color:var(--gold-2)}.step.done{color:var(--teal)}
@@ -396,7 +400,7 @@ body{font-size:16px;line-height:1.8}
 .choice:hover{background:#fffaf0;border-color:var(--gold-line)}.choice.selected{background:#fff8e9;border-color:var(--gold);color:var(--text)}
 .radio{width:20px;height:20px}.choice.selected .radio::after{background:#fff}
 .secondary-btn,.next-btn{font-size:16px;padding:15px 23px}.secondary-btn{background:#fff;color:var(--text-2)}.next-btn{background:var(--text);color:#fff;min-width:210px}
-.form-warning{font-size:14px}
+.stage-warning{font-size:14px}
 .results{padding:42px 0 82px}.result-actions{margin-bottom:18px}.action-btn{font-size:14px;padding:11px 15px;background:#fff;color:var(--gold-2)}
 .report{padding:42px;background:#fff;border-color:var(--line);box-shadow:var(--shadow);font-size:18px;line-height:1.85}
 .report-header{padding-bottom:26px}.report-logo{width:145px;height:58px;filter:none}.report-title{font-size:35px;line-height:1.3}.report-sub{font-size:16px;line-height:1.7}.report-meta{font-size:15px;line-height:1.65}
@@ -422,6 +426,7 @@ body{font-size:16px;line-height:1.8}
 .execution-grid{gap:14px}.execution-card{padding:20px;background:#fff;border-color:var(--line)}.execution-name{font-size:20px;line-height:1.5}.status{font-size:13px;padding:6px 9px}.execution-reason{font-size:16px;line-height:1.8}
 .two-col{gap:18px}.insight-box{padding:22px;background:#fff}.insight-title{font-size:19px}.clean-list{gap:12px}.clean-list li{font-size:17px;line-height:1.85;padding-right:20px}.clean-list li::before{top:13px;width:7px;height:7px}
 .report-foot{font-size:13px;line-height:1.75;flex-wrap:wrap}
+.result-followup[hidden]{display:none!important}
 .result-followup{margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;box-shadow:0 12px 34px rgba(22,38,59,.06)}
 .followup-head span{font-size:14px;font-weight:900;color:var(--teal)}.followup-head h2{font-size:29px;line-height:1.4;margin:4px 0 8px}.followup-head p{font-size:17px;line-height:1.8;color:var(--muted);max-width:850px}
 .followup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin-top:22px}.followup-card{--tool:#2f7f78;position:relative;overflow:hidden;display:grid;grid-template-columns:54px minmax(0,1fr);gap:15px;align-items:start;border:1px solid var(--line);border-top:4px solid var(--tool);border-radius:17px;padding:20px;background:#f9fbfa}.followup-card[data-tone="gold"]{--tool:#b58a2a}.followup-card[data-tone="green"]{--tool:#2f8f68}.followup-card[data-tone="navy"]{--tool:#263f59}.followup-icon{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;background:color-mix(in srgb,var(--tool) 11%,#fff);color:var(--tool)}.followup-icon svg{width:29px;height:29px}.followup-copy{min-width:0}.tool-tag{display:inline-flex;margin-bottom:4px;border-radius:999px;padding:4px 8px;background:color-mix(in srgb,var(--tool) 10%,#fff);color:var(--tool);font-size:11px;font-weight:900}.followup-card h3{font-size:19px;line-height:1.5;margin:0 0 4px}.followup-card p{font-size:15px;color:var(--muted);line-height:1.75;margin:0}.followup-reason{grid-column:1/-1;border-radius:12px;padding:11px 13px;background:#fff;border:1px solid var(--line);color:var(--text-2);font-size:14px;line-height:1.75}.followup-reason strong{color:var(--text)}.followup-card a{grid-column:1/-1;display:inline-flex;justify-content:center;align-items:center;text-decoration:none;border:1px solid color-mix(in srgb,var(--tool) 36%,#fff);color:var(--tool);font-size:14px;font-weight:900;padding:11px 14px;border-radius:11px;background:#fff}.followup-card a:hover{background:color-mix(in srgb,var(--tool) 7%,#fff)}
@@ -759,7 +764,7 @@ body{font-size:16px;line-height:1.8}
 }
 
 
-/* ===== Growth Explorer 3.6: readability, smart guidance and export naming ===== */
+/* ===== Growth Explorer 3.8: question-level progress and visible validation ===== */
 .reference-panel .intro-title{font-size:24px;line-height:1.25}
 .reference-panel-intro{font-size:14px;line-height:1.9;margin-bottom:16px}
 .reference-panel-grid{gap:12px}
@@ -771,7 +776,7 @@ body{font-size:16px;line-height:1.8}
 .start-panel-grid{align-items:stretch}
 .identity-label small{font-weight:800}
 
-.decision-summary{position:relative;overflow:hidden;margin:24px 0 32px;border:1px solid rgba(201,168,76,.36);border-radius:24px;background:linear-gradient(135deg,#fffdf7 0%,#fff 58%,#f1faf8 100%);padding:24px;display:grid;grid-template-columns:1.25fr .75fr;gap:18px;box-shadow:0 16px 42px rgba(15,34,55,.09)}
+.decision-summary{position:relative;overflow:hidden;margin:24px 0 32px;border:1px solid rgba(201,168,76,.36);border-radius:24px;background:linear-gradient(135deg,#fffdf7 0%,#fff 58%,#f1faf8 100%);padding:24px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:18px;box-shadow:0 16px 42px rgba(15,34,55,.09)}
 .decision-summary::after{content:'';position:absolute;left:-58px;top:-70px;width:190px;height:190px;border-radius:50%;border:28px solid rgba(201,168,76,.08);pointer-events:none}
 .decision-main{position:relative;z-index:1;padding:10px 4px 8px 0;align-self:center}
 .decision-eyebrow{display:block;color:var(--gold-dark);font-size:14px;font-weight:900;margin-bottom:6px}
@@ -780,13 +785,11 @@ body{font-size:16px;line-height:1.8}
 .decision-summary.is-go{border-color:rgba(82,183,136,.45);background:linear-gradient(135deg,#f4fbf7,#fff)}
 .decision-summary.is-test{border-color:rgba(201,168,76,.45);background:linear-gradient(135deg,#fffaf0,#fff)}
 .decision-summary.is-ready{border-color:rgba(223,98,95,.3);background:linear-gradient(135deg,#fff7f7,#fff)}
-.decision-visual{position:relative;z-index:1;display:grid;place-items:center;min-height:170px;border-radius:20px;background:rgba(255,255,255,.64);border:1px solid rgba(15,34,55,.07);backdrop-filter:blur(4px)}
-.decision-visual svg{width:92%;max-width:280px;height:auto;filter:drop-shadow(0 12px 18px rgba(15,34,55,.08))}
-.decision-facts{display:grid;gap:10px}
+.decision-facts{display:grid;gap:10px;align-self:stretch;position:relative;z-index:1}
 .decision-facts>div{border:1px solid var(--line);border-radius:14px;padding:11px 13px;background:#fff}
 .decision-facts span,.decision-actions>span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-bottom:5px}
 .decision-facts strong{display:block;color:var(--navy);font-size:15px;line-height:1.65}
-.decision-actions{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
+.decision-actions{grid-column:1/-1;position:relative;z-index:1;border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff}
 .decision-actions ol{list-style:none;counter-reset:none;margin:9px 0 0;padding:0;display:grid;gap:11px;color:var(--text-2);font-size:16px;line-height:1.8;direction:rtl;text-align:right}
 .decision-actions li{display:grid;grid-template-columns:30px minmax(0,1fr);align-items:start;gap:9px;direction:rtl;text-align:right}
 .action-number{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#eef7f3;color:#28704d;font-size:11px;font-weight:900;border:1px solid #d7ebe0}
@@ -872,7 +875,7 @@ body{font-size:16px;line-height:1.8}
 
 .report.exporting .decision-actions ol,.report.exporting .decision-actions li{direction:rtl!important;text-align:right!important}
 .report.exporting .action-number{justify-self:start}
-.report.exporting .growth-position-card,.report.exporting .readiness-card,.report.exporting .decision-visual{background:#fff}
+.report.exporting .growth-position-card,.report.exporting .readiness-card{background:#fff}
 .report.exporting .readiness-card::after{display:none}
 
 @media(max-width:760px){
@@ -891,10 +894,8 @@ body{font-size:16px;line-height:1.8}
  .reference-panel-grid .modal-ref-logo{height:86px}
  .reference-panel-grid .modal-ref-logo img{max-height:76px}
  .decision-summary{grid-template-columns:1fr;padding:16px;gap:12px;border-radius:18px}
- .decision-main{grid-column:auto}
+ .decision-main,.decision-facts,.decision-actions{grid-column:1}
  .decision-main h2{font-size:29px}
- .decision-visual{min-height:126px}
- .decision-visual svg{max-width:220px}
  .decision-facts{grid-template-columns:1fr}
  .growth-position-card{padding:14px}
  .growth-position-heading{align-items:flex-start}
@@ -940,13 +941,13 @@ body{font-size:16px;line-height:1.8}
  </div>
  </div>
  <div class="header-actions">
- <span class="version-badge">الإصدار 3.6</span>
+ <span class="version-badge">الإصدار 3.8</span>
  </div>
  </div>
 </header>
 
 <div class="progress-shell" id="progressShell">
- <div class="progress-top"><div class="progress-fill" id="progressFill"></div></div>
+ <div class="progress-top" role="progressbar" aria-label="تقدم الإجابة" aria-valuemin="0" aria-valuemax="13" aria-valuenow="0" id="questionProgress"><div class="progress-fill" id="progressFill"></div></div>
  <div class="wrap progress-inner">
  <button class="restart-mini" type="button" onclick="App.restart()">البدء من جديد</button>
  <div class="steps" id="steps">
@@ -955,6 +956,7 @@ body{font-size:16px;line-height:1.8}
  <div class="step" data-step="3"><span class="step-dot">3</span><span class="step-label">طرق التنفيذ</span></div>
  <div class="step" data-step="4"><span class="step-dot">4</span><span class="step-label">النتيجة</span></div>
  </div>
+ <div class="progress-status" id="progressStatus" aria-live="polite"><strong id="progressAnswered">0</strong><span>من 13 سؤالا</span></div>
  </div>
 </div>
 
@@ -1059,15 +1061,6 @@ body{font-size:16px;line-height:1.8}
    <h2 id="stageDecision"></h2>
    <p id="stageDecisionText"></p>
   </div>
-  <div class="decision-visual" aria-hidden="true">
-   <svg viewBox="0 0 300 190" fill="none">
-    <defs><linearGradient id="decisionArrow" x1="42" y1="151" x2="248" y2="38" gradientUnits="userSpaceOnUse"><stop stop-color="#3DAA6A"/><stop offset=".55" stop-color="#3D9D98"/><stop offset="1" stop-color="#C9A84C"/></linearGradient></defs>
-    <rect x="30" y="132" width="64" height="30" rx="10" fill="#E9F7EF"/><rect x="105" y="99" width="64" height="63" rx="10" fill="#E8F5F4"/><rect x="180" y="58" width="64" height="104" rx="10" fill="#FBF4DF"/>
-    <path d="M46 137c34-21 54-19 82-48 27-28 46-26 83-58" stroke="url(#decisionArrow)" stroke-width="8" stroke-linecap="round"/>
-    <path d="m204 27 17 2-3 17" stroke="#C9A84C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="47" cy="137" r="8" fill="#3DAA6A" stroke="#fff" stroke-width="4"/><circle cx="128" cy="89" r="8" fill="#3D9D98" stroke="#fff" stroke-width="4"/><circle cx="211" cy="31" r="8" fill="#C9A84C" stroke="#fff" stroke-width="4"/>
-   </svg>
-  </div>
   <div class="decision-facts">
    <div><span>مسار النمو الأقرب</span><strong id="summaryPath"></strong></div>
    <div><span>قوة القراءة</span><strong id="readingStrength"></strong></div>
@@ -1165,16 +1158,15 @@ body{font-size:16px;line-height:1.8}
  </section>
 
  <div class="report-foot">
-  <span>نسخة النموذج 3.6</span>
+  <span>نسخة النموذج 3.8</span>
   <span dir="ltr">https://almohammdin.github.io/GrowthCompass/</span>
  </div>
 </article>
 
  <section class="result-followup" id="resultFollowup">
  <div class="followup-head">
- <span>التوجيه الذكي حسب النتيجة</span>
- <h2>الأداة المناسبة للخطوة التالية</h2>
- <p>تظهر هنا الأدوات الأقرب إلى احتياجك بناء على إجاباتك ونتيجة التقرير. قد تظهر أداة واحدة أو أكثر بحسب عناصر الجاهزية وطريقة التنفيذ.</p>
+ <h2>أدوات مناسبة للخطوة التالية</h2>
+ <p>تظهر الأدوات المتاحة التي ترتبط مباشرة بعناصر الجاهزية أو بطريقة التنفيذ في نتيجتك.</p>
  </div>
  <div class="followup-grid" id="smartTools" aria-live="polite"></div>
  </section>
@@ -1225,6 +1217,8 @@ const STAGES = [
  }
 ];
 
+const TOTAL_QUESTIONS=STAGES.reduce((total,stage)=>total+stage.questions.length,0);
+
 const PATHS = {
  exploit:{id:'exploit',name:'رفع عائد النشاط الحالي',desc:'زيادة الربح من الموارد والعملاء الموجودين وتقليل الهدر.',tier:1,nature:'تطوير النشاط الحالي',natureDesc:'تحسين التشغيل والربحية داخل النشاط والسوق الحاليين.'},
  sustain:{id:'sustain',name:'حماية النشاط والمحافظة على العملاء',desc:'المحافظة على الطلب والعملاء وجودة التجربة ومنع تراجع النشاط.',tier:1,nature:'تطوير النشاط الحالي',natureDesc:'حماية النشاط الحالي والمحافظة على قدرته على المنافسة.'},
@@ -1258,13 +1252,15 @@ const App={
  init(){STAGES.forEach(stage=>this.renderStage(stage));this.renderGrowthMap();},
  renderStage(stage){
   const el=document.getElementById('stage'+stage.id);
-  el.innerHTML=`<div class="wrap"><div class="stage-header"><div class="stage-number">0${stage.id}</div><div><div class="stage-kicker">${stage.kicker}</div><h2 class="stage-title">${stage.title}</h2><p class="stage-desc">${stage.desc}</p></div></div><div class="question-list">${stage.questions.map((q,qi)=>`<article class="question" id="card-${q.id}"><div class="q-head"><div class="q-index">${stage.id}.${qi+1}</div><div><div class="q-title">${q.title}</div><div class="q-help">${q.help}</div></div></div><div class="choices">${q.choices.map(([value,label])=>`<button type="button" class="choice" data-q="${q.id}" data-value="${value}" onclick="App.select('${q.id}','${value}',this)"><span class="radio"></span><span>${label}</span></button>`).join('')}</div></article>`).join('')}</div><div class="stage-nav"><div class="stage-warning" id="warning-${stage.id}">أكمل جميع الأسئلة للانتقال.</div><button class="secondary-btn" type="button" onclick="App.restart()">البدء من جديد</button><button class="primary-btn" type="button" onclick="App.next(${stage.id})">${stage.id===3?'عرض النتيجة':'التالي'}</button></div></div>`;
+  el.innerHTML=`<div class="wrap"><div class="stage-header"><div class="stage-number">0${stage.id}</div><div><div class="stage-kicker">${stage.kicker}</div><h2 class="stage-title">${stage.title}</h2><p class="stage-desc">${stage.desc}</p></div></div><div class="question-list">${stage.questions.map((q,qi)=>`<article class="question" id="card-${q.id}"><div class="q-head"><div class="q-index">${stage.id}.${qi+1}</div><div><div class="q-title">${q.title}</div><div class="q-help">${q.help}</div></div></div><div class="choices">${q.choices.map(([value,label])=>`<button type="button" class="choice" data-q="${q.id}" data-value="${value}" onclick="App.select('${q.id}','${value}',this)"><span class="radio"></span><span>${label}</span></button>`).join('')}</div><div class="question-error" role="alert">اختر إجابة لهذا السؤال للمتابعة.</div></article>`).join('')}</div><div class="stage-nav"><div class="stage-warning" id="warning-${stage.id}" role="alert" aria-live="assertive">أكمل جميع الأسئلة للانتقال.</div><button class="secondary-btn" type="button" onclick="App.restart()">البدء من جديد</button><button class="primary-btn" type="button" onclick="App.next(${stage.id})">${stage.id===3?'عرض النتيجة':'التالي'}</button></div></div>`;
  },
- start(){this.company=document.getElementById('companyName').value.trim();this.participant=document.getElementById('participantName').value.trim();document.getElementById('landing').style.display='none';document.getElementById('progressShell').classList.add('show');this.go(1);},
- select(q,value,btn){this.answers[q]=value;document.querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');document.getElementById('card-'+q).classList.add('answered');const stage=STAGES.find(s=>s.questions.some(x=>x.id===q));document.getElementById('warning-'+stage.id).classList.remove('show');},
- next(stageId){const stage=STAGES.find(s=>s.id===stageId);const complete=stage.questions.every(q=>this.answers[q.id]!==undefined);if(!complete){document.getElementById('warning-'+stageId).classList.add('show');return;}stageId<3?this.go(stageId+1):this.buildResult();},
+ start(){this.company=document.getElementById('companyName').value.trim();this.participant=document.getElementById('participantName').value.trim();document.getElementById('landing').style.display='none';document.getElementById('progressShell').classList.add('show');this.updateQuestionProgress();this.go(1);},
+ select(q,value,btn){this.answers[q]=value;document.querySelectorAll(`[data-q="${q}"]`).forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');const card=document.getElementById('card-'+q);card.classList.add('answered');card.classList.remove('missing');const stage=STAGES.find(s=>s.questions.some(x=>x.id===q));this.updateStageWarning(stage.id);this.updateQuestionProgress();},
+ updateStageWarning(stageId){const stage=STAGES.find(s=>s.id===stageId);const missing=stage.questions.filter(q=>this.answers[q.id]===undefined);const warning=document.getElementById('warning-'+stageId);if(!warning)return missing;if(missing.length){warning.textContent=`تبقى ${missing.length} ${missing.length===1?'إجابة':'إجابات'} في هذه المرحلة.`;}else{warning.classList.remove('show');warning.textContent='اكتملت إجابات هذه المرحلة.';}return missing;},
+ next(stageId){const missing=this.updateStageWarning(stageId);if(missing.length){const warning=document.getElementById('warning-'+stageId);warning.textContent=`تبقى ${missing.length} ${missing.length===1?'إجابة':'إجابات'}. أكمل ${missing.length===1?'السؤال المميز':'الأسئلة المميزة'} للمتابعة.`;warning.classList.add('show');missing.forEach(q=>document.getElementById('card-'+q.id)?.classList.add('missing'));const firstCard=document.getElementById('card-'+missing[0].id);firstCard?.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(()=>firstCard?.querySelector('.choice')?.focus({preventScroll:true}),420);return;}stageId<3?this.go(stageId+1):this.buildResult();},
  go(step){this.current=step;document.querySelectorAll('.assessment,.results').forEach(x=>x.classList.remove('active'));document.getElementById('stage'+step).classList.add('active');this.updateProgress(step);window.scrollTo({top:0,behavior:'smooth'});},
- updateProgress(step){document.querySelectorAll('.step').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('active',n===step);el.classList.toggle('done',n<step);});document.getElementById('progressFill').style.width=((step-1)/3*100)+'%';},
+ updateProgress(step){document.querySelectorAll('.step').forEach(el=>{const n=Number(el.dataset.step);el.classList.toggle('active',n===step);el.classList.toggle('done',n<step);});this.updateQuestionProgress();},
+ updateQuestionProgress(){const answered=STAGES.reduce((total,stage)=>total+stage.questions.filter(q=>this.answers[q.id]!==undefined).length,0);const percent=Math.round(answered/TOTAL_QUESTIONS*100);const fill=document.getElementById('progressFill');const count=document.getElementById('progressAnswered');const bar=document.getElementById('questionProgress');if(fill)fill.style.width=percent+'%';if(count)count.textContent=answered;if(bar){bar.setAttribute('aria-valuenow',String(answered));bar.setAttribute('aria-valuetext',`${answered} من ${TOTAL_QUESTIONS} سؤالا`);}},
 
  classify(){
   const a=this.answers;
@@ -1416,7 +1412,7 @@ const App={
   const classification=this.classify(),readiness=this.readiness();
   const strength=this.readingStrength(classification,readiness),rules=this.decisionRules(classification,readiness),decision=this.stageDecision(classification,readiness,rules),execution=this.execution(classification,readiness),contradictions=this.contradictions(classification,readiness),decisions=this.decisions(classification,readiness,rules);
   this.result={classification,readiness,strength,rules,decision,execution,contradictions,decisions};this.renderResult();
-  document.querySelectorAll('.assessment').forEach(x=>x.classList.remove('active'));document.getElementById('results').classList.add('active');this.current=4;this.updateProgress(4);document.getElementById('progressFill').style.width='100%';window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.assessment').forEach(x=>x.classList.remove('active'));document.getElementById('results').classList.add('active');this.current=4;this.updateProgress(4);this.updateQuestionProgress();window.scrollTo({top:0,behavior:'smooth'});
  },
  renderGrowthMap(){
   document.getElementById('growthMap').innerHTML=`<div class="change-levels"><div class="change-level" data-tier="1"><div class="change-level-number">1</div><div><strong>تطوير النشاط الحالي</strong><span>تحسين التشغيل والمبيعات داخل السوق الحالي.</span></div></div><div class="change-level" data-tier="2"><div class="change-level-number">2</div><div><strong>التوسع انطلاقا من النشاط الحالي</strong><span>الوصول إلى عملاء أو مناطق أو قنوات جديدة مع الاستفادة من النشاط الحالي.</span></div></div><div class="change-level" data-tier="3"><div class="change-level-number">3</div><div><strong>بناء نشاط أو سوق جديد</strong><span>إنشاء مصدر دخل أو نموذج عمل مختلف يحتاج إلى قدرات واختبار سوق.</span></div></div></div><div class="change-summary" id="changeSummary"></div>`;
@@ -1450,32 +1446,30 @@ const App={
   document.getElementById('readinessGrid').innerHTML=readiness.map(x=>{const cls=this.readinessClass(x.score),blocks=x.score===null?0:x.score;return`<div class="readiness-card ${cls}"><div class="readiness-icon">${this.readinessIcon(x.id)}</div><div class="readiness-name">${x.name}</div><div class="readiness-level">${x.level.label}</div><div class="readiness-meter">${[1,2,3,4].map(n=>`<span class="${n<=blocks?'active':''}"></span>`).join('')}</div><div class="readiness-detail">${x.detail}</div></div>`;}).join('');
  },
  smartGuidance(){
-  const {classification,readiness,execution,contradictions,strength,rules}=this.result;
+  const {readiness,execution,rules}=this.result;
   const a=this.answers,tools=[];
   const add=(id,title,summary,reason,url,label,tone,icon)=>{if(!tools.some(x=>x.id===id))tools.push({id,title,summary,reason,url,label,tone,icon});};
   const gov=readiness.find(x=>x.id==='q10');
   const topExecution=execution[0]?.id||'';
-  const realConflicts=contradictions.filter(x=>!x.startsWith('الإجابات متقاربة'));
   const icons={
    check:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3 19 6v5c0 4.6-2.8 7.8-7 10-4.2-2.2-7-5.4-7-10V6l7-3Z" stroke="currentColor" stroke-width="1.8"/><path d="m9 12 2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
    matrix:'<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 9h18M9 4v16m6-11v11" stroke="currentColor" stroke-width="1.8"/></svg>',
    value:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M3 21h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-   partner:'<svg viewBox="0 0 24 24" fill="none"><path d="m8 12 2.4 2.4a2.3 2.3 0 0 0 3.2 0L18 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m3 9 4-4 4 2-5 6-3-4Zm18 0-4-4-4 2 5 6 3-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m7 14 3 3m7-3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-   session:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-5 4v-4.5A2.5 2.5 0 0 1 4 13.5v-8Z" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8m-8 4h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
-   library:'<svg viewBox="0 0 24 24" fill="none"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2V4Z" stroke="currentColor" stroke-width="1.8"/><path d="M7 20V6a2 2 0 0 0-2-2m5 4h6m-6 4h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+   partner:'<svg viewBox="0 0 24 24" fill="none"><path d="m8 12 2.4 2.4a2.3 2.3 0 0 0 3.2 0L18 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m3 9 4-4 4 2-5 6-3-4Zm18 0-4-4-4 2 5 6 3-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m7 14 3 3m7-3-3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
   };
-  if(gov&&(gov.score===null||gov.score<=2))add('govcheck','فحص صحة الحوكمة','تشخيص منظم لعناصر الحوكمة في المشروع أو الشراكة.','ظهرت حاجة إلى فحص وضوح القرار والمتابعة وإدارة المخاطر قبل توسيع التنفيذ.','https://almohammdin.github.io/GovCheck/','افتح GovCheck','green',icons.check);
-  if(['partial','partners','unstable'].includes(a.q10)||rules.some(x=>/الصلاحيات|الحقوق/.test(x.text)))add('authority','مصفوفة الصلاحيات التفاعلية','تحدد من يقترح ويوافق وينفذ ويراقب القرارات الرئيسية.','إجاباتك تشير إلى حاجة لترتيب الصلاحيات ومسار الاعتماد قبل بدء مسار النمو.','https://almohammdin.github.io/authority-matrix/','أنشئ مصفوفة الصلاحيات','gold',icons.matrix);
-  if(a.q12==='acquisition'||topExecution==='acquisition')add('valuation','دليل تقييم الشركات','يساعد على فهم التقييم والاستعداد للتفاوض على الاستثمار أو الاستحواذ.','ظهر الاستثمار أو الاستحواذ ضمن الخيارات التي تستحق الدراسة في نتيجتك.','https://almohammdin.github.io/valuation-guide/','افتح دليل التقييم','navy',icons.value);
-  if(['partner','startup','searching'].includes(a.q12)||topExecution==='partnership')add('partnership','حاسبة الشراكات','تساعد على ترتيب المساهمات والحصص وأبرز بنود التفاهم الأولي.','ظهر الاعتماد على شريك أو طرف خارجي ضمن طريقة التنفيذ الأقرب.','https://almohammdin.github.io/SHARAKAH/','افتح حاسبة الشراكات','green',icons.partner);
-  if(classification.conflict||realConflicts.length>0)add('session','جلسة حوكمة مسار النمو','مناقشة مركزة لتحويل التعارضات والإشارات المتباينة إلى قرارات واضحة.','توجد إجابات تحتاج إلى مواءمة قبل اعتماد اتجاه التنفيذ والالتزامات المرتبطة به.','https://tr.ee/8spRWPpAG0','ناقش حوكمة المسار','gold',icons.session);
-  if(!tools.length)add('library','أدوات الحوكمة وتطوير الأعمال','مجموعة أدوات عملية تساعد على الانتقال من القراءة إلى التطبيق.','عناصر الجاهزية متقاربة، ويمكن اختيار الأداة الأقرب للخطوة التي تريد تنفيذها الآن.','https://linktr.ee/almohammdin','استعرض الأدوات','navy',icons.library);
+  if(gov&&(gov.score===null||gov.score<=2))add('govcheck','فحص صحة الحوكمة','تشخيص منظم لعناصر الحوكمة في المشروع أو الشراكة.','ظهرت حاجة إلى فحص وضوح القرار والمتابعة وإدارة المخاطر قبل توسيع التنفيذ.','https://almohammdin.github.io/GovCheck/','الانتقال إلى فحص صحة الحوكمة','green',icons.check);
+  if(['partial','partners','unstable'].includes(a.q10)||rules.some(x=>/الصلاحيات|الحقوق/.test(x.text)))add('authority','مصفوفة الصلاحيات','تحدد من يقترح ويوافق وينفذ ويراقب القرارات الرئيسية.','إجاباتك تشير إلى حاجة لترتيب الصلاحيات ومسار الاعتماد قبل بدء مسار النمو.','https://almohammdin.github.io/authority-matrix/','الانتقال إلى مصفوفة الصلاحيات','gold',icons.matrix);
+  if(a.q12==='acquisition'||topExecution==='acquisition')add('valuation','دليل تقييم الشركات','يساعد على فهم التقييم والاستعداد للتفاوض على الاستثمار أو الاستحواذ.','ظهر الاستثمار أو الاستحواذ ضمن الخيارات التي تستحق الدراسة في نتيجتك.','https://almohammdin.github.io/valuation-guide/','الانتقال إلى دليل تقييم الشركات','navy',icons.value);
+  if(['partner','startup','searching'].includes(a.q12)||topExecution==='partnership')add('partnership','حاسبة الشراكات','تساعد على ترتيب المساهمات والحصص وأبرز بنود التفاهم الأولي.','ظهر الاعتماد على شريك أو طرف خارجي ضمن طريقة التنفيذ الأقرب.','https://almohammdin.github.io/SHARAKAH/','الانتقال إلى حاسبة الشراكات','green',icons.partner);
   return tools.slice(0,3);
  },
  renderSmartGuidance(){
   const el=document.getElementById('smartTools');if(!el)return;
+  const section=document.getElementById('resultFollowup');
   const tools=this.smartGuidance();
-  el.innerHTML=tools.map(x=>`<article class="followup-card" data-tool="${x.id}" data-tone="${x.tone}"><div class="followup-icon" aria-hidden="true">${x.icon}</div><div class="followup-copy"><span class="tool-tag">مقترحة حسب النتيجة</span><h3>${x.title}</h3><p>${x.summary}</p></div><div class="followup-reason"><strong>سبب ظهورها:</strong> ${x.reason}</div><a href="${x.url}" target="_blank" rel="noopener">${x.label}</a></article>`).join('');
+  if(!tools.length){el.innerHTML='';if(section)section.hidden=true;return;}
+  if(section)section.hidden=false;
+  el.innerHTML=tools.map(x=>`<article class="followup-card" data-tool="${x.id}" data-tone="${x.tone}"><div class="followup-icon" aria-hidden="true">${x.icon}</div><div class="followup-copy"><span class="tool-tag">أداة مرتبطة بالنتيجة</span><h3>${x.title}</h3><p>${x.summary}</p></div><div class="followup-reason"><strong>سبب ظهورها:</strong> ${x.reason}</div><a href="${x.url}" target="_blank" rel="noopener">${x.label}</a></article>`).join('');
  },
  renderResult(){
   const {classification:c,readiness:r,strength,rules,decision,execution:e,contradictions,decisions}=this.result;
@@ -1498,13 +1492,84 @@ const App={
   this.renderSmartGuidance();
  },
 
- async captureReport(){const report=document.getElementById('report');document.body.classList.add('busy');report.classList.add('exporting');try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;await new Promise(r=>setTimeout(r,180));if(!window.html2canvas)throw new Error('تعذر تحميل أداة التصدير');const width=report.scrollWidth,height=report.scrollHeight;const canvas=await html2canvas(report,{backgroundColor:'#f7f9fc',scale:2.2,useCORS:true,allowTaint:false,logging:false,width,height,windowWidth:Math.max(1080,width+120),windowHeight:Math.max(900,height+120),imageTimeout:15000,removeContainer:true});const ctx=canvas.getContext('2d');if(ctx)ctx.imageSmoothingQuality='high';return canvas;}finally{report.classList.remove('exporting');document.body.classList.remove('busy');}},
- canvasBlob(canvas,type='image/png',quality=.95){return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('تعذر إنشاء الملف')),type,quality));},
+
+ async waitForReportAssets(report){
+  const pending=[...report.querySelectorAll('img')].filter(img=>!img.complete).map(img=>new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,2500);}));
+  if(pending.length)await Promise.all(pending);
+  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(_){}}
+ },
+ reportStyles(){
+  return[...document.querySelectorAll('style')].map(style=>style.textContent||'').join('\n')+`\nhtml,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}.report.exporting{margin:0!important;max-width:none!important;box-shadow:none!important}`;
+ },
+ async captureReportNative(report){
+  await this.waitForReportAssets(report);
+  const rect=report.getBoundingClientRect();
+  const width=Math.ceil(Math.max(report.scrollWidth,rect.width));
+  const height=Math.ceil(Math.max(report.scrollHeight,rect.height));
+  const clone=report.cloneNode(true);
+  clone.classList.add('exporting');
+  clone.style.width=`${width}px`;
+  clone.style.margin='0';
+  clone.setAttribute('xmlns','http://www.w3.org/1999/xhtml');
+  const wrapper=document.createElement('div');
+  wrapper.setAttribute('xmlns','http://www.w3.org/1999/xhtml');
+  wrapper.setAttribute('dir','rtl');
+  const style=document.createElement('style');
+  style.textContent=this.reportStyles();
+  wrapper.append(style,clone);
+  const xhtml=new XMLSerializer().serializeToString(wrapper);
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%">${xhtml}</foreignObject></svg>`;
+  const dataUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('تعذر تحويل التقرير إلى صورة'));img.src=dataUrl;});
+   const maxDimension=15500;
+   const preferredScale=2;
+   const scale=Math.max(1,Math.min(preferredScale,maxDimension/Math.max(width,height)));
+   const canvas=document.createElement('canvas');
+   canvas.width=Math.max(1,Math.round(width*scale));
+   canvas.height=Math.max(1,Math.round(height*scale));
+   const ctx=canvas.getContext('2d',{alpha:false});
+   if(!ctx)throw new Error('تعذر إنشاء مساحة الرسم');
+   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+   ctx.drawImage(image,0,0,canvas.width,canvas.height);
+   return canvas;
+ },
+ async captureReport(){
+  const report=document.getElementById('report');
+  document.body.classList.add('busy');report.classList.add('exporting');
+  try{
+   await this.waitForReportAssets(report);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+   if(typeof window.html2canvas==='function'){
+    try{
+     const width=report.scrollWidth,height=report.scrollHeight;
+     return await window.html2canvas(report,{backgroundColor:'#ffffff',scale:Math.min(2,15500/Math.max(width,height)),useCORS:true,allowTaint:false,logging:false,width,height,windowWidth:Math.max(1080,width+120),windowHeight:Math.max(900,height+120),imageTimeout:5000,removeContainer:true});
+    }catch(error){console.warn('تعذر المسار الأساسي للتصدير، تم الانتقال إلى المسار المدمج.',error);}
+   }
+   return await this.captureReportNative(report);
+  }finally{report.classList.remove('exporting');document.body.classList.remove('busy');}
+ },
+ canvasBlob(canvas,type='image/png',quality=.95){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('تعذر إنشاء الملف')),type,quality));},
  fileName(ext){const company=(this.company||'').replace(/[\\/:*?"<>|]+/g,'-').replace(/\s+/g,' ').trim();const base=company?`تقرير مستكشف مسارات النمو - ${company}`:'تقرير مستكشف مسارات النمو';return`${base}.${ext}`;},
- async exportImage(){try{const canvas=await this.captureReport();const blob=await this.canvasBlob(canvas);this.downloadBlob(blob,this.fileName('png'));}catch(e){alert('تعذر إنشاء الصورة. تأكد من الاتصال بالإنترنت ثم أعد المحاولة.');}},
- async exportPDF(){try{const canvas=await this.captureReport();if(!window.jspdf)throw new Error('تعذر تحميل PDF');const{jsPDF}=window.jspdf;const pageW=210,margin=8,contentW=pageW-margin*2,pxPerMm=canvas.width/contentW,imageH=canvas.height/pxPerMm,pageH=imageH+margin*2;const pdf=new jsPDF({orientation:'p',unit:'mm',format:[pageW,pageH],compress:true});pdf.addImage(canvas.toDataURL('image/jpeg',.98),'JPEG',margin,margin,contentW,imageH,undefined,'FAST');pdf.save(this.fileName('pdf'));}catch(e){alert('تعذر إنشاء PDF. تأكد من الاتصال بالإنترنت ثم أعد المحاولة.');}},
- downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000);},
- restart(){if(!confirm('سيتم مسح الإجابات والعودة للبداية. هل تريد المتابعة؟'))return;this.answers={};this.result=null;document.querySelectorAll('.choice.selected').forEach(x=>x.classList.remove('selected'));document.querySelectorAll('.question.answered').forEach(x=>x.classList.remove('answered'));document.querySelectorAll('.assessment,.results').forEach(x=>x.classList.remove('active'));document.getElementById('progressShell').classList.remove('show');document.getElementById('landing').style.display='';window.scrollTo({top:0,behavior:'smooth'});},
+ concatBytes(parts){const size=parts.reduce((sum,part)=>sum+part.length,0),out=new Uint8Array(size);let offset=0;for(const part of parts){out.set(part,offset);offset+=part.length;}return out;},
+ pdfBlobFromCanvas(canvas){
+  const jpegUrl=canvas.toDataURL('image/jpeg',.94),base64=jpegUrl.slice(jpegUrl.indexOf(',')+1),binary=atob(base64),jpeg=new Uint8Array(binary.length);
+  for(let i=0;i<binary.length;i++)jpeg[i]=binary.charCodeAt(i);
+  const encoder=new TextEncoder(),chunks=[];let length=0;const offsets=[];
+  const addBytes=bytes=>{chunks.push(bytes);length+=bytes.length;};const add=text=>addBytes(encoder.encode(text));const begin=n=>{offsets[n]=length;add(`${n} 0 obj\n`);};
+  const pageW=595.28,pageH=pageW*(canvas.height/canvas.width),content=`q\n${pageW.toFixed(2)} 0 0 ${pageH.toFixed(2)} 0 0 cm\n/Im0 Do\nQ\n`;
+  add('%PDF-1.4\n%GrowthExplorer\n');
+  begin(1);add('<< /Type /Catalog /Pages 2 0 R >>\nendobj\n');
+  begin(2);add('<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n');
+  begin(3);add(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW.toFixed(2)} ${pageH.toFixed(2)}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n`);
+  begin(4);add(`<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`);addBytes(jpeg);add('\nendstream\nendobj\n');
+  const contentBytes=encoder.encode(content);begin(5);add(`<< /Length ${contentBytes.length} >>\nstream\n`);addBytes(contentBytes);add('endstream\nendobj\n');
+  const xref=length;add('xref\n0 6\n0000000000 65535 f \n');for(let i=1;i<=5;i++)add(`${String(offsets[i]).padStart(10,'0')} 00000 n \n`);add(`trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`);
+  return new Blob([this.concatBytes(chunks)],{type:'application/pdf'});
+ },
+ async exportImage(){try{const canvas=await this.captureReport();const blob=await this.canvasBlob(canvas,'image/png');this.downloadBlob(blob,this.fileName('png'));}catch(error){console.error(error);alert('تعذر إنشاء الصورة في هذه المحاولة. أعد فتح الصفحة ثم جرّب مرة أخرى.');}},
+ async exportPDF(){try{const canvas=await this.captureReport();const blob=this.pdfBlobFromCanvas(canvas);this.downloadBlob(blob,this.fileName('pdf'));}catch(error){console.error(error);alert('تعذر إنشاء ملف PDF في هذه المحاولة. أعد فتح الصفحة ثم جرّب مرة أخرى.');}},
+ downloadBlob(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);},
+ restart(){if(!confirm('سيتم مسح الإجابات والعودة للبداية. هل تريد المتابعة؟'))return;this.answers={};this.result=null;document.querySelectorAll('.choice.selected').forEach(x=>x.classList.remove('selected'));document.querySelectorAll('.question.answered,.question.missing').forEach(x=>x.classList.remove('answered','missing'));document.querySelectorAll('.stage-warning.show').forEach(x=>x.classList.remove('show'));document.querySelectorAll('.assessment,.results').forEach(x=>x.classList.remove('active'));this.updateQuestionProgress();document.getElementById('progressShell').classList.remove('show');document.getElementById('landing').style.display='';window.scrollTo({top:0,behavior:'smooth'});},
  escape(v){return String(v).replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]));}
 };
 App.init();
