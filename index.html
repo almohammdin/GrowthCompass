@@ -764,7 +764,7 @@ body{font-size:16px;line-height:1.8}
 }
 
 
-/* ===== Growth Explorer 3.8: question-level progress and visible validation ===== */
+/* ===== Growth Explorer 3.9: stable export with embedded web font ===== */
 .reference-panel .intro-title{font-size:24px;line-height:1.25}
 .reference-panel-intro{font-size:14px;line-height:1.9;margin-bottom:16px}
 .reference-panel-grid{gap:12px}
@@ -941,7 +941,7 @@ body{font-size:16px;line-height:1.8}
  </div>
  </div>
  <div class="header-actions">
- <span class="version-badge">الإصدار 3.8</span>
+ <span class="version-badge">الإصدار 3.9</span>
  </div>
  </div>
 </header>
@@ -1158,7 +1158,7 @@ body{font-size:16px;line-height:1.8}
  </section>
 
  <div class="report-foot">
-  <span>نسخة النموذج 3.8</span>
+  <span>نسخة النموذج 3.9</span>
   <span dir="ltr">https://almohammdin.github.io/GrowthCompass/</span>
  </div>
 </article>
@@ -1496,13 +1496,51 @@ const App={
  async waitForReportAssets(report){
   const pending=[...report.querySelectorAll('img')].filter(img=>!img.complete).map(img=>new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,2500);}));
   if(pending.length)await Promise.all(pending);
-  if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(_){}}
+  if(document.fonts){
+   try{
+    await Promise.all([300,400,500,600,700].map(weight=>document.fonts.load(`${weight} 18px "IBM Plex Sans Arabic"`)));
+    await document.fonts.ready;
+   }catch(_){}
+  }
  },
- reportStyles(){
-  return[...document.querySelectorAll('style')].map(style=>style.textContent||'').join('\n')+`\nhtml,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}.report.exporting{margin:0!important;max-width:none!important;box-shadow:none!important}`;
+ arrayBufferToDataURL(buffer,mime='font/woff2'){
+  const bytes=new Uint8Array(buffer);let binary='';const size=0x8000;
+  for(let i=0;i<bytes.length;i+=size)binary+=String.fromCharCode(...bytes.subarray(i,i+size));
+  return`data:${mime};base64,${btoa(binary)}`;
+ },
+ async exportFontCSS(){
+  if(typeof this._exportFontCSS==='string')return this._exportFontCSS;
+  if(this._exportFontPromise)return this._exportFontPromise;
+  this._exportFontPromise=(async()=>{
+   const href=(document.querySelector('link[href*="fonts.googleapis.com"][href*="IBM+Plex+Sans+Arabic"]')||{}).href||'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap';
+   try{
+    const response=await fetch(href,{mode:'cors',cache:'force-cache',credentials:'omit'});
+    if(!response.ok)throw new Error(`تعذر تحميل تعريف الخط (${response.status})`);
+    let css=await response.text();
+    const urls=[...new Set([...css.matchAll(/url\((?:['"]?)(https:\/\/fonts\.gstatic\.com\/[^)'"\s]+)(?:['"]?)\)/g)].map(match=>match[1]))];
+    if(!urls.length)throw new Error('تعذر العثور على ملفات الخط');
+    const replacements=await Promise.all(urls.map(async url=>{
+     const fontResponse=await fetch(url,{mode:'cors',cache:'force-cache',credentials:'omit'});
+     if(!fontResponse.ok)throw new Error(`تعذر تحميل ملف الخط (${fontResponse.status})`);
+     const mime=fontResponse.headers.get('content-type')||'font/woff2';
+     return[url,this.arrayBufferToDataURL(await fontResponse.arrayBuffer(),mime)];
+    }));
+    replacements.forEach(([url,data])=>{css=css.split(url).join(data);});
+    this._exportFontCSS=css.replace(/font-display\s*:\s*swap/gi,'font-display:block');
+   }catch(error){
+    // إذا كان الخط غير متاح أصلا، سيستخدم التصدير نفس خط الاحتياط الظاهر على الشاشة.
+    this._exportFontCSS='';
+   }
+   return this._exportFontCSS;
+  })();
+  return this._exportFontPromise;
+ },
+ reportStyles(fontCSS=''){
+  return`${fontCSS}\n${[...document.querySelectorAll('style')].map(style=>style.textContent||'').join('\n')}\nhtml,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}.report.exporting{margin:0!important;max-width:none!important;box-shadow:none!important;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif!important}.report.exporting *{font-family:inherit}`;
  },
  async captureReportNative(report){
   await this.waitForReportAssets(report);
+  const fontCSS=await this.exportFontCSS();
   const rect=report.getBoundingClientRect();
   const width=Math.ceil(Math.max(report.scrollWidth,rect.width));
   const height=Math.ceil(Math.max(report.scrollHeight,rect.height));
@@ -1514,37 +1552,33 @@ const App={
   const wrapper=document.createElement('div');
   wrapper.setAttribute('xmlns','http://www.w3.org/1999/xhtml');
   wrapper.setAttribute('dir','rtl');
+  wrapper.style.width=`${width}px`;
+  wrapper.style.background='#ffffff';
   const style=document.createElement('style');
-  style.textContent=this.reportStyles();
+  style.textContent=this.reportStyles(fontCSS);
   wrapper.append(style,clone);
   const xhtml=new XMLSerializer().serializeToString(wrapper);
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><foreignObject width="100%" height="100%">${xhtml}</foreignObject></svg>`;
-  const dataUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
-  const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('تعذر تحويل التقرير إلى صورة'));img.src=dataUrl;});
-   const maxDimension=15500;
-   const preferredScale=2;
-   const scale=Math.max(1,Math.min(preferredScale,maxDimension/Math.max(width,height)));
-   const canvas=document.createElement('canvas');
-   canvas.width=Math.max(1,Math.round(width*scale));
-   canvas.height=Math.max(1,Math.round(height*scale));
-   const ctx=canvas.getContext('2d',{alpha:false});
-   if(!ctx)throw new Error('تعذر إنشاء مساحة الرسم');
-   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
-   ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
-   ctx.drawImage(image,0,0,canvas.width,canvas.height);
-   return canvas;
+  const svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  const image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error('تعذر تحويل التقرير إلى صورة'));img.src=svgUrl;});
+  const maxDimension=15500,preferredScale=2;
+  const scale=Math.max(1,Math.min(preferredScale,maxDimension/Math.max(width,height)));
+  const canvas=document.createElement('canvas');
+  canvas.width=Math.max(1,Math.round(width*scale));
+  canvas.height=Math.max(1,Math.round(height*scale));
+  const ctx=canvas.getContext('2d',{alpha:false});
+  if(!ctx)throw new Error('تعذر إنشاء مساحة الرسم');
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';
+  ctx.drawImage(image,0,0,canvas.width,canvas.height);
+  return canvas;
  },
  async captureReport(){
   const report=document.getElementById('report');
   document.body.classList.add('busy');report.classList.add('exporting');
   try{
-   await this.waitForReportAssets(report);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-   if(typeof window.html2canvas==='function'){
-    try{
-     const width=report.scrollWidth,height=report.scrollHeight;
-     return await window.html2canvas(report,{backgroundColor:'#ffffff',scale:Math.min(2,15500/Math.max(width,height)),useCORS:true,allowTaint:false,logging:false,width,height,windowWidth:Math.max(1080,width+120),windowHeight:Math.max(900,height+120),imageTimeout:5000,removeContainer:true});
-    }catch(error){console.warn('تعذر المسار الأساسي للتصدير، تم الانتقال إلى المسار المدمج.',error);}
-   }
+   await this.waitForReportAssets(report);
+   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
    return await this.captureReportNative(report);
   }finally{report.classList.remove('exporting');document.body.classList.remove('busy');}
  },
