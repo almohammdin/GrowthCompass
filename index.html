@@ -21,9 +21,7 @@
 <meta name="twitter:description" content="استكشف اتجاه النمو، وافحص عناصر البدء، واربط المسار بطرق التنفيذ في تقرير واضح وقابل للمشاركة.">
 <meta name="twitter:image" content="https://almohammdin.github.io/GrowthCompass/growth-compass-preview.jpg?v=2">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2316263b'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23c6a044' stroke-width='3'/%3E%3Cpath d='M26 40l5-14 7-5-4 13-8 6Z' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%232f7f78'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://almohammdin.github.io/hatta-brand-guide/downloads/brand.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -1099,11 +1097,80 @@ body{font-size:16px;line-height:1.8}
  .report :where(.report-brand-copy span,.decision-eyebrow,.decision-facts span,.decision-actions>span,.action-number,.card-label,.position-marker,.position-label small,.matrix-cell span,.readiness-overview-badges em,.readiness-level,.path-num,.path-name,.path-horizon,.execution-rank,.execution-fact span,.report-fold>summary>small,.report-foot,.basis-item span,.status,.info-dot){font-size:11px!important}
 }
 
+/* Hatta 2.0 · 25-10-2026. Font URLs point to the canonical guide. */
+
+
+
+
+
+
+
+
+
+:root{--hatta-navy:#061f56;--hatta-navy-secondary:#0b2f75;--hatta-gold:#b47a2d;--hatta-gold-text:#8a5b20;--hatta-gold-light:#e6d2ae;--hatta-paper:#fbfaf7;--hatta-ink:#17233c;--hatta-muted:#657084;--hatta-success:#087a55;--hatta-danger:#b42318;--hatta-radius:16px}
+.hatta-body,.hatta-control{font-family:"Thmanyah Sans",Tahoma,sans-serif;font-feature-settings:"salt" 0;font-synthesis:none;line-height:1.8}
+.hatta-display{font-family:"Thmanyah Serif Display",serif;font-weight:900;font-feature-settings:"salt" 1;line-height:1.25}
+.hatta-subheading{font-family:"Thmanyah Sans",Tahoma,sans-serif;font-weight:500;font-feature-settings:"salt" 1;line-height:1.45}
+.hatta-en{font-family:"El Messiri",Arial,sans-serif;direction:ltr;unicode-bidi:isolate}
+.hatta-card{border:1px solid #e0e3e9;border-radius:var(--hatta-radius);background:white;padding:24px;color:var(--hatta-ink)}
+.hatta-button{font:500 16px/1.5 "Thmanyah Sans",sans-serif;font-feature-settings:"salt" 0;min-height:44px;padding:10px 20px;border:1px solid var(--hatta-navy);border-radius:10px;background:var(--hatta-navy);color:white;cursor:pointer}
+.hatta-button:focus-visible{outline:3px solid var(--hatta-gold-text);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.hatta-animated{animation:none!important;transition:none!important}}
+
+/* Original artwork; the SVG viewport excludes transparent source margins. */
+.hatta-wordmark{display:block;width:224px;max-width:100%;height:auto;aspect-ratio:746/269;overflow:hidden;flex-shrink:0}
+.naif-wordmark{display:block;width:96px;max-width:100%;aspect-ratio:557/258;color:var(--navy,#061f56);flex-shrink:0}
+.naif-wordmark--light{color:#fff}
+.naif-wordmark>img{display:block;width:100%;max-width:100%;height:auto;margin:0;filter:brightness(0)}
+.naif-wordmark--light>img{filter:none}
+@supports ((mask-image:url("https://almohammdin.github.io/hatta-brand-guide/assets/naif-signature.webp")) or (-webkit-mask-image:url("https://almohammdin.github.io/hatta-brand-guide/assets/naif-signature.webp"))){
+.naif-wordmark{background-color:currentColor;-webkit-mask:url("https://almohammdin.github.io/hatta-brand-guide/assets/naif-signature.webp") center/contain no-repeat;mask:url("https://almohammdin.github.io/hatta-brand-guide/assets/naif-signature.webp") center/contain no-repeat}
+.naif-wordmark>img{opacity:0;filter:none}
+}
+@media print{.naif-wordmark{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+
+/* Hatta visual identity; analysis and semantic state colors are preserved. */
+:root{--bg:#fbfaf7;--surface:#f6f4ef;--surface-2:#f4f3ef;--text:#17233c;--text-2:#435166;--muted:#657084;--navy:#061f56;--gold:#b47a2d;--gold-2:#8a5b20;--gold-line:#e6d2ae;--font:"Thmanyah Sans",Tahoma,sans-serif}
+body{font-feature-settings:"salt" 0;font-synthesis:none}
+.hero-title,.stage-title,.report-title,.decision-main h2,.section-head h2{font-family:"Thmanyah Serif Display",serif;font-weight:700;font-feature-settings:"salt" 1;letter-spacing:0;line-height:1.3}
+.hero-title{font-weight:900}
+.hero-question,.intro-title,.brand-title,h3,h4,.report-fold>summary>span,.readiness-name,.direction-title,.execution-simple{font-family:"Thmanyah Sans",sans-serif;font-weight:500;font-feature-settings:"salt" 1;line-height:1.5}
+button,input,select,textarea,table,.choice{font-feature-settings:"salt" 0}
+.socials a,.modal-reference-grid article>span,[lang="en"]{font-family:"El Messiri",sans-serif}
+.site-header{background:var(--bg);box-shadow:none}
+.header-inner{height:auto;min-height:78px;gap:20px;padding-block:8px}
+.hatta-home{display:block;flex-shrink:0;text-decoration:none}
+.hatta-wordmark{width:150px}
+.header-inner .brand{margin-inline-start:auto}
+.brand-title{font-weight:700}
+.brand-sub{font-size:11px;white-space:normal}
+.header-actions{margin-inline-start:0}
+.product-mark{color:var(--navy)}
+.primary-btn,.next-btn{background:var(--navy);color:#fff;box-shadow:none;font-weight:500}
+.primary-btn:hover,.next-btn:hover{background:#0b2f75}
+.landing::before{background:transparent}
+.landing{padding-block:32px}
+.hero-copy{padding:18px 0}
+.hero-title{color:var(--navy)}
+.hero-question{color:#8a5b20}
+.intro-card{box-shadow:none}
+.site-footer{padding:8px 0 10px;background:var(--bg)}
+.footer-inner{gap:8px 18px;flex-wrap:wrap}
+.footer-inner .naif-wordmark{width:64px}
+.footer-copy{display:flex;flex-direction:column;align-items:flex-start;gap:2px;flex:1}
+.footer-copy strong{font-size:11px}
+.footer-copy small{border:0;padding:0;font-size:10px}
+.socials{gap:12px}
+.socials a{font-size:10px;color:var(--navy)}
+:focus-visible{outline:3px solid #8a5b20;outline-offset:3px}
+@media(max-width:760px){.header-inner{gap:12px;flex-wrap:wrap}.header-actions{margin-inline-start:auto}.header-inner .brand{flex:1}.brand-title{font-size:14px;white-space:normal}.product-mark{width:30px;height:30px;flex-shrink:0}.brand-sub{font-size:10px}.hero-title{font-size:38px;letter-spacing:0}.footer-inner{flex-direction:row;align-items:center}.footer-copy{min-width:130px}.socials{margin-inline-start:auto}}
+@media(max-width:420px){.header-inner .product-mark{display:none}.header-actions{display:none}.footer-copy{order:3}.footer-inner .socials{order:4}.progress-shell{top:0}}
+
 </style>
 </head>
 <body>
 <header class="site-header">
- <div class="wrap header-inner">
+ <div class="wrap header-inner"><a class="hatta-home" href="https://almohammdin.github.io/services/" aria-label="حتى لحلول الأعمال"><svg class="hatta-wordmark" viewBox="134 149 746 269" role="img" aria-label="حتى لحلول الأعمال"><image href="https://almohammdin.github.io/hatta-brand-guide/assets/hatta-logo.webp" width="1000" height="526"/></svg></a>
  <div class="brand">
  <span class="product-mark" aria-hidden="true">
 <svg viewBox="0 0 64 64" fill="none">
@@ -1367,7 +1434,7 @@ body{font-size:16px;line-height:1.8}
 </main>
 
 <footer class="site-footer">
- <div class="wrap footer-inner">
+ <div class="wrap footer-inner"><a class="hatta-home" href="https://almohammdin.github.io/services/" aria-label="حتى لحلول الأعمال"><svg class="hatta-wordmark" viewBox="134 149 746 269" role="img" aria-label="حتى لحلول الأعمال"><image href="https://almohammdin.github.io/hatta-brand-guide/assets/hatta-logo.webp" width="1000" height="526"/></svg></a><span class="naif-wordmark"><img src="https://almohammdin.github.io/hatta-brand-guide/assets/naif-signature.webp" alt="نايف المحمدي"></span>
  <div class="footer-copy"><strong>مستكشف مسارات النمو</strong><small>إعداد وتطوير: نايف المحمدي</small></div>
  <div class="socials">
  <a href="https://x.com/almohammdin" target="_blank" rel="noopener">X</a>
@@ -1690,7 +1757,7 @@ const App={
   if(pending.length)await Promise.all(pending);
   if(document.fonts){
    try{
-    await Promise.all([300,400,500,600,700].map(weight=>document.fonts.load(`${weight} 18px "IBM Plex Sans Arabic"`)));
+    await Promise.all(['400 18px "Thmanyah Sans"','500 18px "Thmanyah Sans"','700 18px "Thmanyah Sans"','700 24px "Thmanyah Serif Display"','900 24px "Thmanyah Serif Display"','400 14px "El Messiri"'].map(font=>document.fonts.load(font)));
     await document.fonts.ready;
    }catch(_){}
   }
@@ -1704,12 +1771,12 @@ const App={
   if(typeof this._exportFontCSS==='string')return this._exportFontCSS;
   if(this._exportFontPromise)return this._exportFontPromise;
   this._exportFontPromise=(async()=>{
-   const href=(document.querySelector('link[href*="fonts.googleapis.com"][href*="IBM+Plex+Sans+Arabic"]')||{}).href||'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap';
+   const href="https://almohammdin.github.io/hatta-brand-guide/downloads/brand.css";
    try{
     const response=await fetch(href,{mode:'cors',cache:'force-cache',credentials:'omit'});
     if(!response.ok)throw new Error(`تعذر تحميل تعريف الخط (${response.status})`);
-    let css=await response.text();
-    const urls=[...new Set([...css.matchAll(/url\((?:['"]?)(https:\/\/fonts\.gstatic\.com\/[^)'"\s]+)(?:['"]?)\)/g)].map(match=>match[1]))];
+    let css=(await response.text()).match(/@font-face\{[^}]*\}/g)?.join("\n")||"";
+    const urls=[...new Set([...css.matchAll(/url\((?:['"]?)(https:\/\/almohammdin\.github\.io\/hatta-brand-guide\/assets\/fonts\/[^)'"\s]+)(?:['"]?)\)/g)].map(match=>match[1]))];
     if(!urls.length)throw new Error('تعذر العثور على ملفات الخط');
     const replacements=await Promise.all(urls.map(async url=>{
      const fontResponse=await fetch(url,{mode:'cors',cache:'force-cache',credentials:'omit'});
@@ -1728,7 +1795,7 @@ const App={
   return this._exportFontPromise;
  },
  reportStyles(fontCSS=''){
-  return`${fontCSS}\n${[...document.querySelectorAll('style')].map(style=>style.textContent||'').join('\n')}\nhtml,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}.report.exporting{margin:0!important;max-width:none!important;box-shadow:none!important;font-family:"IBM Plex Sans Arabic",Tahoma,Arial,sans-serif!important}.report.exporting *{font-family:inherit}`;
+  return`${fontCSS}\n${[...document.querySelectorAll('style')].map(style=>style.textContent||'').join('\n')}\nhtml,body{margin:0!important;padding:0!important;background:#fff!important;overflow:visible!important}.report.exporting{margin:0!important;max-width:none!important;box-shadow:none!important;font-family:"Thmanyah Sans",Tahoma,sans-serif!important}`;
  },
  async captureReportNative(report){
   await this.waitForReportAssets(report);
